@@ -27,10 +27,9 @@ const LoginPage = () => {
             <div>
               <Label>Username</Label>
               <Input
-                name="email"
-                type="text"
-                placeholder="Email address"
-                defaultValue={"iqbalfarhan1996@gmail.com"}
+                name="username"
+                placeholder="Username"
+                defaultValue={"admin"}
               />
             </div>
             <div>
@@ -39,7 +38,7 @@ const LoginPage = () => {
                 name="password"
                 type="password"
                 placeholder="Password"
-                defaultValue={"adminoke"}
+                defaultValue={"adminpass"}
               />
             </div>
           </CardContent>

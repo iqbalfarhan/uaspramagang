@@ -7,9 +7,10 @@ import {
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 
-const KelasCountStat = async () => {
+const PramagangCountStat = async () => {
   const supabase = createClient();
-  const { data } = await supabase.from("kelas").select();
+
+  const { data } = await supabase.from("pramagang").select();
   return (
     <Card>
       <CardContent className="flex flow-row pt-5 gap-4 items-center">
@@ -19,12 +20,12 @@ const KelasCountStat = async () => {
           </Avatar>
         </div>
         <div>
-          <CardDescription>Total</CardDescription>
-          <CardTitle>Kelas jurusan</CardTitle>
+          <CardDescription>Total data</CardDescription>
+          <CardTitle>Pramagang</CardTitle>
         </div>
       </CardContent>
     </Card>
   );
 };
 
-export default KelasCountStat;
+export default PramagangCountStat;

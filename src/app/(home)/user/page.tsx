@@ -13,11 +13,11 @@ import { createClient } from "@/lib/supabase/client";
 import { getAvatarLink, getInitials } from "@/lib/utils";
 import { Pencil, PlusCircle } from "lucide-react";
 import Link from "next/link";
-import DeleteUserButton from "./delete-user-button";
+import DeleteUserButton from "./[id]/delete/delete-user-button";
 
 const UserPage = async () => {
   const supabase = createClient();
-  const { data: users } = await supabase.from("users").select();
+  const { data: users } = await supabase.from("users").select().order("id");
 
   return (
     <>
@@ -38,17 +38,19 @@ const UserPage = async () => {
             <TableHead>Name</TableHead>
             <TableHead>Username</TableHead>
             <TableHead>Password</TableHead>
+            <TableHead>Tanggal lahir</TableHead>
+            <TableHead>Jenis kelamin</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users?.map((user) => (
+          {users?.map((user, index) => (
             <TableRow key={user.id}>
-              <TableCell>{user.id}</TableCell>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>
-                <Avatar className="rounded-lg">
+                <Avatar className="size-8 rounded-lg bg-primary">
                   <AvatarImage
-                    src={getAvatarLink(user.name)}
+                    src={getAvatarLink(user.username)}
                     alt={"user profile"}
                   />
                   <AvatarFallback className="rounded-lg">
@@ -59,6 +61,8 @@ const UserPage = async () => {
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.username}</TableCell>
               <TableCell>{user.password}</TableCell>
+              <TableCell>{user.dob}</TableCell>
+              <TableCell>{user.gender}</TableCell>
               <TableCell>
                 <Button size={"icon"} asChild variant={"ghost"}>
                   <Link href={`/user/${user.id}/edit`}>

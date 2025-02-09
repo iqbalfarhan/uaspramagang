@@ -1,7 +1,7 @@
+import { logout } from "@/app/(auth)/login/actions";
 import { LogOut } from "lucide-react";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -30,10 +30,12 @@ const LogoutButton = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>
-            <LogOut />
-            Logout
-          </AlertDialogAction>
+          <form action={logout}>
+            <Button type="submit" variant={"destructive"}>
+              <LogOut />
+              Logout
+            </Button>
+          </form>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -5,10 +5,11 @@ const KelasPage = () => {
     <>
       <PageHeader title="Data kelas" />
       <div>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia,
-        architecto! Numquam consequuntur fugiat quisquam ducimus deserunt odit
-        dolorum, recusandae pariatur voluptate officia. Reiciendis blanditiis
-        vel cupiditate. Corporis deserunt ipsum perspiciatis?
+        Halaman ini digunakan untuk menampilkan table data kelas. terdapat kolom
+        id, name, jurusan, angkatan dan action. khusus kolom action, akan
+        menampilkan 2 buah button untuk edit dan juga delete kelas. selain itu
+        terdapat tombol create kelas pada bagian atas halaman. gunakan halaman
+        user management sebagai contoh tampilan
       </div>
     </>
   );

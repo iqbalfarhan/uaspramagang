@@ -1,16 +1,12 @@
-"use client";
-
-import { getAvatarLink } from "@/lib/utils";
 import {
   BookA,
   Home,
+  Info,
   Shapes,
   UserCircle,
   Users,
   UsersRound,
 } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -20,12 +16,12 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuSubItem,
+  SidebarMenuItem,
   SidebarRail,
 } from "../ui/sidebar";
 import AppLogo from "./app-logo";
 import { NavUser } from "./nav-user";
+import SidebarLink from "./sidebar-link";
 
 const appmenus = [
   {
@@ -66,12 +62,16 @@ const appmenus = [
         href: "/user",
         icon: <UsersRound />,
       },
+      {
+        label: "Instruksi kerja",
+        href: "/instruksi",
+        icon: <Info />,
+      },
     ],
   },
 ];
 
-const AppSidebar = () => {
-  const pathname = usePathname();
+const AppSidebar = async () => {
   return (
     <Sidebar>
       <SidebarHeader>
@@ -84,17 +84,9 @@ const AppSidebar = () => {
             <SidebarGroupContent>
               {menus.map((menu, index) => (
                 <SidebarMenu key={index}>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={pathname.startsWith(menu.href)}
-                    >
-                      <Link href={menu.href}>
-                        {menu.icon}
-                        <span>{menu.label}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuSubItem>
+                  <SidebarMenuItem>
+                    <SidebarLink menu={menu} />
+                  </SidebarMenuItem>
                 </SidebarMenu>
               ))}
             </SidebarGroupContent>
@@ -102,13 +94,7 @@ const AppSidebar = () => {
         ))}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            name: "Iqbal farhan syuahda",
-            email: "john.doe@example.com",
-            avatar: getAvatarLink("iqbal farhan syuhada"),
-          }}
-        />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

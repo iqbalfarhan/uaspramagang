@@ -1,5 +1,3 @@
-"use client";
-
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -11,16 +9,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/client";
 import { Trash2 } from "lucide-react";
-import { redirect } from "next/navigation";
+import { deleteUser } from "./action";
 
 const DeleteUserButton = ({ userId }: { userId: string }) => {
-  async function deleteUser() {
-    const supabase = createClient();
-    const { error } = await supabase.from("users").delete().eq("id", userId);
-    if (!error) redirect("/user");
-  }
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -38,7 +30,10 @@ const DeleteUserButton = ({ userId }: { userId: string }) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button onClick={deleteUser}>Ya hapus user</Button>
+          <form action={deleteUser}>
+            <input type="hidden" name="userId" value={userId} />
+            <Button>Ya hapus user</Button>
+          </form>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

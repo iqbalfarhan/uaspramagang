@@ -1,3 +1,4 @@
+import DatePicker from "@/components/app/date-picker";
 import PageHeader from "@/components/app/page-header";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +11,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { createClient } from "@/lib/supabase/client";
 import { Check } from "lucide-react";
 import { updateUser } from "./action";
@@ -19,11 +27,13 @@ const EditUserPage = async ({ params }: { params: { id: string } }) => {
   const updateUserWithId = updateUser.bind(null, id);
 
   const supabase = createClient();
-  const { data } = await supabase.from("users").select().eq("id", parseInt(id));
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", parseInt(id))
+    .single();
 
-  if (!data) return null;
-
-  const user = await data[0];
+  if (error) return null;
 
   return (
     <>
@@ -42,7 +52,7 @@ const EditUserPage = async ({ params }: { params: { id: string } }) => {
               <Input
                 placeholder="User's full name"
                 name="name"
-                defaultValue={user.name}
+                defaultValue={data.name}
               />
             </div>
             <div>
@@ -50,17 +60,32 @@ const EditUserPage = async ({ params }: { params: { id: string } }) => {
               <Input
                 placeholder="username"
                 name="username"
-                defaultValue={user.username}
+                defaultValue={data.username}
               />
             </div>
             <div>
               <Label>Password</Label>
               <Input
-                type="password"
                 placeholder="password"
                 name="password"
-                defaultValue={user.password}
+                defaultValue={data.password}
               />
+            </div>
+            <div>
+              <Label>Tanggal lahir</Label>
+              <DatePicker name="dob" defaultValue={data.dob} />
+            </div>
+            <div>
+              <Label>Jenis kelamin</Label>
+              <Select name="gender" defaultValue={data.gender}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Pilih jenis kelamin" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="male">Laki-laki</SelectItem>
+                  <SelectItem value="female">Perempuan</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </CardContent>
           <CardFooter>

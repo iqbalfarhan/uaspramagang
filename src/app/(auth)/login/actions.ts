@@ -1,45 +1,62 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
+import { createClient } from "@/lib/supabase/client";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
-  const supabase = await createClient();
+  const cookie = await cookies();
+  const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  const username = formData.get("username");
+  const password = formData.get("password");
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { data } = await supabase
+    .from("users")
+    .select("*")
+    .eq("username", username)
+    .eq("password", password)
+    .single();
 
-  if (error) {
-    redirect("/error");
+  console.log(data);
+
+  if (data) {
+    cookie.set("authorized", "true", {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24,
+      path: "/",
+    });
+
+    const { password, ...user } = data;
+
+    if (password !== "expected_hashed_password") {
+      console.log("Login berhasil");
+    }
+
+    cookie.set("user", JSON.stringify(user), {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24,
+      path: "/",
+    });
+
+    redirect("/dashboard");
   }
-
-  revalidatePath("/dashboard", "layout");
-  redirect("/dashboard");
 }
 
-export async function signup(formData: FormData) {
-  const supabase = await createClient();
+export async function logout() {
+  const cookie = await cookies();
+  cookie.set("authorized", "");
+  redirect("/login");
+}
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+export async function getCurrentUser() {
+  const cookie = await cookies();
+  const userCookie = cookie.get("user")?.value;
 
-  const { error } = await supabase.auth.signUp(data);
-
-  if (error) {
-    redirect("/error");
+  if (userCookie) {
+    const user = JSON.parse(userCookie);
+    return user;
   }
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  return null;
 }

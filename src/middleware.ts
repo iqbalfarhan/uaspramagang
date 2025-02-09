@@ -1,8 +1,21 @@
-import { type NextRequest } from "next/server";
-import { updateSession } from "./lib/supabase/middleware";
+import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const authorized = request.cookies.get("authorized")?.value === "true";
+  const nextUrl = request.nextUrl;
+
+  // Jika pengguna sudah terauthorisasi dan mencoba mengakses /login, redirect ke home
+  if (authorized && nextUrl.pathname === "/login") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  // Jika pengguna belum terauthorisasi dan mencoba mengakses selain /login, redirect ke /login
+  if (!authorized && nextUrl.pathname !== "/login") {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Jika pengguna terauthorisasi dan mencoba mengakses selain /login, atau belum terauthorisasi dan mencoba mengakses /login, biarkan request berlanjut
+  return NextResponse.next();
 }
 
 export const config = {
