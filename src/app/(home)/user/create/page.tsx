@@ -1,14 +1,7 @@
 import DatePicker from "@/components/app/date-picker";
 import PageHeader from "@/components/app/page-header";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -26,14 +19,8 @@ const CreateUserPage = () => {
     <>
       <PageHeader title="Create User" />
       <Card className="w-full max-w-md mx-auto">
-        <CardHeader>
-          <CardTitle>Create user</CardTitle>
-          <CardDescription>
-            Silahkan isi form berikut untuk membuat user baru
-          </CardDescription>
-        </CardHeader>
         <form action={createUser}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 mt-6">
             <div>
               <Label>Nama lengkap</Label>
               <Input placeholder="User's full name" name="name" />

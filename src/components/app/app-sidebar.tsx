@@ -1,7 +1,6 @@
 import {
   BookA,
   Home,
-  Info,
   Shapes,
   UserCircle,
   Users,
@@ -62,18 +61,13 @@ const appmenus = [
         href: "/user",
         icon: <UsersRound />,
       },
-      {
-        label: "Instruksi kerja",
-        href: "/instruksi",
-        icon: <Info />,
-      },
     ],
   },
 ];
 
 const AppSidebar = async () => {
   return (
-    <Sidebar>
+    <Sidebar variant={"sidebar"}>
       <SidebarHeader>
         <AppLogo />
       </SidebarHeader>

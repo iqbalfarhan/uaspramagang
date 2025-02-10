@@ -13,7 +13,7 @@ const PramagangCountStat = async () => {
   const { data } = await supabase.from("pramagang").select();
   return (
     <Card>
-      <CardContent className="flex flow-row pt-5 gap-4 items-center">
+      <CardContent className="flex flow-row pt-6 gap-4 items-center">
         <div>
           <Avatar>
             <AvatarFallback>{data?.length}</AvatarFallback>

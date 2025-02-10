@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/app/(auth)/login/actions";
 import PageHeader from "@/components/app/page-header";
-import { createClient } from "@/lib/supabase/client";
+// import { createClient } from "@/lib/supabase/client";
 import KelasCountStat from "./kelas-count-stat";
 import MahasiswaCountStat from "./mahasiswa-count-stat";
 import PramagangCountStat from "./pramagang-count-stat";
@@ -9,10 +9,11 @@ import ProfileStat from "./profile-stat";
 const DashboardPage = async () => {
   const user = await getCurrentUser();
 
-  const supabase = createClient();
-  const { data } = await supabase
-    .from("pramagang")
-    .select("*, mahasiswa: mahasiswa_id (*, kelas: kelas_id (*))");
+  // const supabase = createClient();
+  // const { data } = await supabase
+  //   .from("pramagang")
+  //   .select("*, mahasiswa: mahasiswa_id (*, kelas: kelas_id (*))");
+
   return (
     <>
       <PageHeader title={`Selamat datang ${user.name}`} />
@@ -23,7 +24,7 @@ const DashboardPage = async () => {
         <ProfileStat />
       </div>
 
-      {data?.map((mhs) => <div key={mhs.id}>{JSON.stringify(mhs)}</div>)}
+      {/* {data?.map((mhs) => <div key={mhs.id}>{JSON.stringify(mhs)}</div>)} */}
     </>
   );
 };

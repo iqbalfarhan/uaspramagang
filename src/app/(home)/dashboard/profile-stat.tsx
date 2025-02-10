@@ -12,7 +12,7 @@ const ProfileStat = async () => {
   const user = await getCurrentUser();
   return (
     <Card>
-      <CardContent className="flex flow-row pt-5 gap-4 items-center">
+      <CardContent className="flex flow-row pt-6 gap-4 items-center">
         <div>
           <Avatar className="size-8 bg-primary rounded-lg">
             <AvatarImage src={getAvatarLink(user.username)} alt={user.name} />

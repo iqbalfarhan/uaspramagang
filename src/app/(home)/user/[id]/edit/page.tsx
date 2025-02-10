@@ -1,14 +1,7 @@
 import DatePicker from "@/components/app/date-picker";
 import PageHeader from "@/components/app/page-header";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -20,10 +13,15 @@ import {
 } from "@/components/ui/select";
 import { createClient } from "@/lib/supabase/client";
 import { Check } from "lucide-react";
+import { FC } from "react";
 import { updateUser } from "./action";
 
-const EditUserPage = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+interface UserEditPageProps {
+  params: Promise<{ id: string }>;
+}
+
+const EditUserPage: FC<UserEditPageProps> = async ({ params }) => {
+  const { id } = await params;
   const updateUserWithId = updateUser.bind(null, id);
 
   const supabase = createClient();
@@ -37,15 +35,9 @@ const EditUserPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <PageHeader title="Edit User" />
+      <PageHeader title={`Edit User ${id}`} />
       <Card className="w-full max-w-md mx-auto">
-        <CardHeader>
-          <CardTitle>Edit user</CardTitle>
-          <CardDescription>
-            Silahkan ubah form berikut untuk mengedit user ini
-          </CardDescription>
-        </CardHeader>
-        <form action={updateUserWithId}>
+        <form action={updateUserWithId} className="space-y-4 mt-6">
           <CardContent className="space-y-4">
             <div>
               <Label>Nama lengkap</Label>
