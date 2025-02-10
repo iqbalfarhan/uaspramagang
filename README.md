@@ -1,3 +1,3 @@
 # Aplikasi list data Pramagang
 
-ini aplikasi uas pramagang untuk kelas ase 2
+ini aplikasi uas pramagang untuk kelas ase02
