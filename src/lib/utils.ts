@@ -17,3 +17,12 @@ export function getInitials(name: string): string {
 export function getAvatarLink(name: string): string {
   return `https://api.dicebear.com/7.x/pixel-art/svg?seed=${name}`;
 }
+
+export function formatTanggal(isoDate: string) {
+  const date = new Date(isoDate);
+  const day = date.getDate();
+  const month = date.toLocaleString("id", { month: "long" });
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+}
