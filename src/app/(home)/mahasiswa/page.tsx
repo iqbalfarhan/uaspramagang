@@ -1,15 +1,55 @@
 import PageHeader from "@/components/app/page-header";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { createClient } from "@/lib/supabase/client";
+import {  Edit3, PlusCircle, Trash2 } from "lucide-react";
+import Link from "next/link";
 
-const MahasiswaPage = () => {
+
+const MahasiswaPage = async () => {
+  const supabase = createClient();
+  const { data } = await supabase.from("mahasiswa").select("*, kelas: kelas_id (*)");
   return (
     <>
-      <PageHeader title="Data mahasiswa" />
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos
-        deserunt quis tenetur odit exercitationem laboriosam sunt assumenda iste
-        ipsa esse. Laudantium voluptas excepturi, nobis nostrum autem quisquam
-        illo! Labore, illum.
-      </p>
+      <PageHeader title="Data mahasiswa">
+        <Button asChild>
+          <Link href={"/mahasiswa/create"}>
+            <PlusCircle />
+            Tambah
+          </Link>
+        </Button>
+      </PageHeader>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>No</TableHead>
+            <TableHead>Nama Mahasiswa</TableHead>
+            <TableHead>NIM</TableHead>
+            <TableHead>Kelas</TableHead>
+            <TableHead>Jurusan</TableHead>
+            <TableHead>Action</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data?.map((mhs, index) => (
+            <TableRow key={mhs.id}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{mhs.name}</TableCell>
+              <TableCell>{mhs.nim}</TableCell>
+              <TableCell>{mhs.kelas.name}</TableCell>
+              <TableCell>{mhs.kelas.jurusan}</TableCell>
+              <TableCell>
+                <Button variant={"outline"} size={"icon"}>
+                  <Edit3 />
+                </Button>
+                <Button variant={"outline"} size={"icon"}>
+                  <Trash2 />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </>
   );
 };
