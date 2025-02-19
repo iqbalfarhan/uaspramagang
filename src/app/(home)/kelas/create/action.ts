@@ -7,7 +7,7 @@ export async function createKelas(formData: FormData) {
   const supabase = createClient();
 
   await supabase
-    .from("kelases")
+    .from("kelas")
     .insert({
       name: formData.get("name"),
       jurusan: formData.get("jurusan"),
