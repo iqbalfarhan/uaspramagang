@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/table";
 import { createClient } from "@/lib/supabase/client";
 import { formatTanggal } from "@/lib/utils";
-import { Edit, Trash } from "lucide-react";
+import { Edit, Pencil, Trash } from "lucide-react";
+import DeletePramagangButton from "./[id]/delete/delete-pramagang-button";
+import Link from "next/link";
 
 const PramagangPage = async () => {
   const supabase = createClient();
@@ -44,12 +46,12 @@ const PramagangPage = async () => {
                   {formatTanggal(mhs.mulai)} {"-"} {formatTanggal(mhs.selesai)}
                 </TableCell>
                 <TableCell>
-                  <Button variant={"outline"}>
-                    <Edit />
-                  </Button>
-                  <Button variant={"outline"}>
-                    <Trash />
-                  </Button>
+                <Button size={"icon"} asChild variant={"ghost"}>
+                  <Link href={`/pramagang/${mhs.id}/edit`}>
+                    <Pencil />
+                  </Link>
+                </Button>
+                  <DeletePramagangButton pramagangId={mhs.id} />
                 </TableCell>
               </TableRow>
             </TableBody>
