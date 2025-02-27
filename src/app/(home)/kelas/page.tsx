@@ -45,8 +45,10 @@ const KelasPage = async () => {
               <TableCell>{kelas.jurusan}</TableCell>
               <TableCell>{kelas.angkatan}</TableCell>
               <TableCell>
-                <Button variant={"outline"}>
+                <Button size={"icon"} asChild variant={"ghost"}>
+                  <Link href={`/kelas/${kelas.id}/edit`}>
                   <Pencil />
+                  </Link>
                 </Button>
                 <Button variant={"outline"}>
                   <Trash />
