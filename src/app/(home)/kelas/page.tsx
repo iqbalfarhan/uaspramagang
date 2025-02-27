@@ -9,8 +9,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { createClient } from "@/lib/supabase/client";
-import { Pencil, PlusCircle, Trash } from "lucide-react";
+import { Pencil, PlusCircle } from "lucide-react";
 import Link from "next/link";
+import DeleteKelasButton from "./[id]/delete/delete-kelas-button";
+
 
 const KelasPage = async () => {
   const supabase = createClient();
@@ -50,9 +52,7 @@ const KelasPage = async () => {
                   <Pencil />
                   </Link>
                 </Button>
-                <Button variant={"outline"}>
-                  <Trash />
-                </Button>
+                <DeleteKelasButton kelasId={kelas.id} />
               </TableCell>
             </TableRow>
           ))}
