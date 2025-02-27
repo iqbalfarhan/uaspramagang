@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/table";
 import { createClient } from "@/lib/supabase/client";
 import { formatTanggal } from "@/lib/utils";
-import { Edit, Pencil, Trash } from "lucide-react";
-import DeletePramagangButton from "./[id]/delete/delete-pramagang-button";
+import { Pencil, PlusCircle } from "lucide-react";
 import Link from "next/link";
+import DeletePramagangButton from "./[id]/delete/delete-pramagang-button";
 
 const PramagangPage = async () => {
   const supabase = createClient();
@@ -22,7 +22,14 @@ const PramagangPage = async () => {
 
   return (
     <>
-      <PageHeader title="Data pramagang" />
+      <PageHeader title="Data pramagang">
+        <Button asChild>
+          <Link href={"/pramagang/create"}>
+            <PlusCircle />
+            Tambah
+          </Link>
+        </Button>
+      </PageHeader>
       <Table>
         <TableHeader>
           <TableRow>
@@ -34,29 +41,27 @@ const PramagangPage = async () => {
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
-        {data?.map((mhs, index) => (
-          <>
-            <TableBody key={mhs.id}>
-              <TableRow>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{mhs.mahasiswa.name}</TableCell>
-                <TableCell>{mhs.mahasiswa.kelas.name}</TableCell>
-                <TableCell>{mhs.lokasi}</TableCell>
-                <TableCell>
-                  {formatTanggal(mhs.mulai)} {"-"} {formatTanggal(mhs.selesai)}
-                </TableCell>
-                <TableCell>
+        <TableBody>
+          {data?.map((mhs, index) => (
+            <TableRow key={index}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{mhs.mahasiswa.name}</TableCell>
+              <TableCell>{mhs.mahasiswa.kelas.name}</TableCell>
+              <TableCell>{mhs.lokasi}</TableCell>
+              <TableCell>
+                {formatTanggal(mhs.mulai)} {"-"} {formatTanggal(mhs.selesai)}
+              </TableCell>
+              <TableCell>
                 <Button size={"icon"} asChild variant={"ghost"}>
                   <Link href={`/pramagang/${mhs.id}/edit`}>
                     <Pencil />
                   </Link>
                 </Button>
-                  <DeletePramagangButton pramagangId={mhs.id} />
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </>
-        ))}
+                <DeletePramagangButton pramagangId={mhs.id} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </>
   );
