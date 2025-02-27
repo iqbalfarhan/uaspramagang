@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/table";
 import { createClient } from "@/lib/supabase/client";
 import { formatTanggal } from "@/lib/utils";
-import { Edit, PlusCircle, Trash } from "lucide-react";
+import { Pencil, PlusCircle } from "lucide-react";
 import Link from "next/link";
+import DeletePramagangButton from "./[id]/delete/delete-pramagang-button";
 
 const PramagangPage = async () => {
   const supabase = createClient();
@@ -40,9 +41,9 @@ const PramagangPage = async () => {
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
-        {data?.map((mhs, index) => (
-          <TableBody key={mhs.id}>
-            <TableRow>
+        <TableBody>
+          {data?.map((mhs, index) => (
+            <TableRow key={index}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>{mhs.mahasiswa.name}</TableCell>
               <TableCell>{mhs.mahasiswa.kelas.name}</TableCell>
@@ -51,16 +52,16 @@ const PramagangPage = async () => {
                 {formatTanggal(mhs.mulai)} {"-"} {formatTanggal(mhs.selesai)}
               </TableCell>
               <TableCell>
-                <Button variant={"outline"}>
-                  <Edit />
+                <Button size={"icon"} asChild variant={"ghost"}>
+                  <Link href={`/pramagang/${mhs.id}/edit`}>
+                    <Pencil />
+                  </Link>
                 </Button>
-                <Button variant={"outline"}>
-                  <Trash />
-                </Button>
+                <DeletePramagangButton pramagangId={mhs.id} />
               </TableCell>
             </TableRow>
-          </TableBody>
-        ))}
+          ))}
+        </TableBody>
       </Table>
     </>
   );
