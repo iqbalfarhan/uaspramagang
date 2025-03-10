@@ -1,14 +1,22 @@
 import PageHeader from "@/components/app/page-header";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { createClient } from "@/lib/supabase/client";
-import {  Edit3, PlusCircle, Trash2 } from "lucide-react";
+import { Edit3, PlusCircle, Trash2 } from "lucide-react";
 import Link from "next/link";
-
 
 const MahasiswaPage = async () => {
   const supabase = createClient();
-  const { data } = await supabase.from("mahasiswa").select("*, kelas: kelas_id (*)");
+  const { data } = await supabase
+    .from("mahasiswa")
+    .select("*, kelas: kelas_id (*)");
   return (
     <>
       <PageHeader title="Data mahasiswa">
@@ -40,7 +48,9 @@ const MahasiswaPage = async () => {
               <TableCell>{mhs.kelas.jurusan}</TableCell>
               <TableCell>
                 <Button variant={"outline"} size={"icon"}>
+                  <Link href={`/mahasiswa/${mhs.id}/edit`}>                    
                   <Edit3 />
+                  </Link>
                 </Button>
                 <Button variant={"outline"} size={"icon"}>
                   <Trash2 />
