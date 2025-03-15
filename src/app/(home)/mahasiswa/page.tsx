@@ -9,8 +9,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { createClient } from "@/lib/supabase/client";
-import { Edit3, PlusCircle, Trash2 } from "lucide-react";
+import { Edit3, PlusCircle } from "lucide-react";
 import Link from "next/link";
+import DeleteMahasiswaButton from "./[id]/delete/delete-mahasiswa-page";
 
 const MahasiswaPage = async () => {
   const supabase = createClient();
@@ -51,9 +52,9 @@ const MahasiswaPage = async () => {
                   <Link href={`/mahasiswa/${mhs.id}/edit`}>                    
                   <Edit3 />
                   </Link>
-                </Button>
+                </Button>         
                 <Button variant={"outline"} size={"icon"}>
-                  <Trash2 />
+                  <DeleteMahasiswaButton mahasiswaId={mhs.id} />                
                 </Button>
               </TableCell>
             </TableRow>
